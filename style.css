@@ -1,49 +1,55 @@
 body {
-  margin: 0;
-  padding: 0;
   background: transparent;
-  font-family: 'Montserrat', Arial, sans-serif;
+  font-family: 'Creepster', Arial, sans-serif;
 }
 
 .widget-note {
   width: 420px;
-  padding: 20px;
-  background: rgba(35, 35, 55, 0.96);
+  padding: 20px 27px 16px 27px;
+  background: linear-gradient(135deg, #160D13 75%, #460006 100%);
+  border: 3px solid #911C1D;
+  box-shadow: 0 0 60px #21021D, 0 0 14px #b70017;
   border-radius: 18px;
-  box-shadow: 0 3px 32px #0006, 0 1px 6px #000;
-  color: #fff;
+  color: #fbe8ea;
+  filter: drop-shadow(0 1px 11px #440007a0);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.05em;
-  margin-bottom: 8px;
-  user-select: none;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  text-shadow: 2px 4px 2px #2a0003;
 }
 
 .toggle-btn, .reset-btn {
-  background: #184;
-  color: #fff;
-  border: none;
-  padding: 4px 14px;
-  margin-left: 5px;
-  border-radius: 7px;
-  font-size: 1em;
+  background: #2A0004;
+  color: #FFD7D7;
+  border: 2px solid #6f0101;
+  box-shadow: 0 0 9px #660009;
+  padding: 4px 13px;
+  margin-left: 7px;
+  border-radius: 6px;
+  font-family: 'Creepster', Arial, sans-serif;
+  letter-spacing: 1px;
+  font-size: 1.08em;
   cursor: pointer;
-  transition: background .2s;
+  transition: 0.22s;
 }
-.reset-btn { background: #922; }
-.toggle-btn:hover, .reset-btn:hover { background: #357; }
+.toggle-btn:hover, .reset-btn:hover {
+  background: #5e0013;
+  color: #ffd7d7;
+}
 
 .progress-bar-bg {
   position: relative;
   width: 100%;
-  height: 36px;
-  background: #202445;
-  border-radius: 12px;
-  margin-bottom: 10px;
+  height: 39px;
+  margin-bottom: 13px;
+  background: repeating-linear-gradient(135deg, #200, #441 7px, #381117 14px, #6b1e1b 18px);
+  border-radius: 14px;
+  border: 3px solid #280003;
   overflow: hidden;
 }
 .progress-bar-fg {
@@ -51,57 +57,68 @@ body {
   left: 0;
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, #06f 0%, #7fe 90%);
-  border-radius: 12px 0 0 12px;
-  transition: width 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+  background: linear-gradient(90deg, #b70017 0%, #6b1e1b 100%);
+  box-shadow: 0 0 16px #c20019b6, 0 0 8px #490009;
+  border-radius: 14px 0 0 14px;
+  transition: width 0.7s cubic-bezier(.68,-0.55,.27,1.55);
   z-index: 1;
 }
 .progress-label {
   position: absolute;
   width: 100%;
   text-align: center;
-  line-height: 36px;
-  font-size: 1.36em;
+  line-height: 40px;
+  font-size: 2.3em;
+  letter-spacing: .06em;
+  top: -2px;
+  font-family: 'Creepster', Arial, sans-serif;
+  text-shadow: 0px 0px 26px #900002cc, 2px 3px 6px #350002, 0 0 7px #e8003a99;
   z-index: 2;
-  color: #fff;
-  text-shadow: 2px 2px 8px #000c;
-  user-select: none;
+  pointer-events: none;
 }
+
 .flash {
-  animation: flashAnim 0.4s;
+  animation: bloodflash 0.42s;
 }
-@keyframes flashAnim {
-  0% { background: #ffe360; color: #402; }
-  100% { background: inherit; color: #fff; }
+@keyframes bloodflash {
+  0% { background: #f00; color: #111; }
+  50% { background: #200; color: #fefefe;}
+  100% { background: inherit; color: #ffd9d9;}
 }
 
 .info, .last-voters, .actions {
-  margin-top: 8px;
+  margin-top: 9px;
   font-size: 1em;
+  font-family: 'Creepster', Arial, sans-serif;
 }
+
 #votants {
-  padding-left: 12px;
-  margin:2px 0;
-  list-style: disc;
-  color: #bedfff;
-  font-size: .96em;
+  padding-left: 13px;
+  margin: 2px 0;
+  color: #e26d8d;
+  font-size: 1.17em;
 }
 #votants li {
   margin-bottom: 0;
+  filter: blur(0.10px) brightness(0.8);
+  text-shadow: 0 0 4px #d23939, 1px 2px 2px #210009;
 }
+
 .actions button {
   margin-right: 8px;
-  display: inline-block;
-  margin-top: 6px;
-  background: #259df7;
-  color: #fff;
-  border: none;
-  padding: 3px 10px;
-  border-radius: 5px;
+  background: #440009;
+  color: #ffc6cc;
+  border: 2px solid #c1101a;
+  padding: 3px 11px;
+  border-radius: 7px;
   cursor: pointer;
-  font-size: .95em;
-  transition: background .16s;
+  font-family: 'Creepster', Arial, sans-serif;
+  font-size: 1.09em;
+  letter-spacing: .11em;
+  box-shadow: 0 0 10px #430014;
+  transition: background .19s;
 }
 .actions button:hover {
-  background: #194a78;
+  background: #900025;
+  color: #fff;
 }
