@@ -1,124 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
 body {
   background: transparent;
-  font-family: 'Creepster', Arial, sans-serif;
-}
-
-.widget-note {
-  width: 420px;
-  padding: 20px 27px 16px 27px;
-  background: linear-gradient(135deg, #160D13 75%, #460006 100%);
-  border: 3px solid #911C1D;
-  box-shadow: 0 0 60px #21021D, 0 0 14px #b70017;
-  border-radius: 18px;
-  color: #fbe8ea;
-  filter: drop-shadow(0 1px 11px #440007a0);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.1em;
-  margin-bottom: 10px;
-  text-shadow: 2px 4px 2px #2a0003;
-}
-
-.toggle-btn, .reset-btn {
-  background: #2A0004;
-  color: #FFD7D7;
-  border: 2px solid #6f0101;
-  box-shadow: 0 0 9px #660009;
-  padding: 4px 13px;
-  margin-left: 7px;
-  border-radius: 6px;
-  font-family: 'Creepster', Arial, sans-serif;
-  letter-spacing: 1px;
-  font-size: 1.08em;
-  cursor: pointer;
-  transition: 0.22s;
-}
-.toggle-btn:hover, .reset-btn:hover {
-  background: #5e0013;
-  color: #ffd7d7;
-}
-
-.progress-bar-bg {
-  position: relative;
-  width: 100%;
-  height: 39px;
-  margin-bottom: 13px;
-  background: repeating-linear-gradient(135deg, #200, #441 7px, #381117 14px, #6b1e1b 18px);
-  border-radius: 14px;
-  border: 3px solid #280003;
+  color: #ff2222;
+  font-family: 'Creepster', cursive;
+  text-align: center;
   overflow: hidden;
 }
-.progress-bar-fg {
+
+#jugement {
+  padding: 25px;
+  background: rgba(30, 0, 0, 0.7);
+  border-radius: 20px;
+  box-shadow: 0 0 40px #ff0000 inset, 0 0 25px #400000;
+  display: inline-block;
+  position: relative;
+}
+
+/* Effet taches de sang */
+#jugement::before {
+  content: "";
   position: absolute;
-  left: 0;
+  top: -10px;
+  left: 20px;
+  width: 90%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(255,0,0,0.25) 0%, transparent 70%);
+  filter: blur(6px);
+  z-index: -1;
+}
+
+h2 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-shadow: 0 0 15px #ff0000, 0 0 5px #aa0000;
+}
+
+#note-moyenne {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  color: #ff5555;
+  text-shadow: 0 0 8px #ff0000;
+}
+
+#barre {
+  width: 400px;
+  height: 25px;
+  background: #220000;
+  border-radius: 15px;
+  overflow: hidden;
+  margin: 10px auto;
+  box-shadow: 0 0 25px #ff0000 inset;
+}
+
+#remplissage {
+  width: 0%;
   height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, #b70017 0%, #6b1e1b 100%);
-  box-shadow: 0 0 16px #c20019b6, 0 0 8px #490009;
-  border-radius: 14px 0 0 14px;
-  transition: width 0.7s cubic-bezier(.68,-0.55,.27,1.55);
-  z-index: 1;
-}
-.progress-label {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  line-height: 40px;
-  font-size: 2.3em;
-  letter-spacing: .06em;
-  top: -2px;
-  font-family: 'Creepster', Arial, sans-serif;
-  text-shadow: 0px 0px 26px #900002cc, 2px 3px 6px #350002, 0 0 7px #e8003a99;
-  z-index: 2;
-  pointer-events: none;
+  background: linear-gradient(90deg, #ff0000, #aa0000, #ff0000);
+  box-shadow: 0 0 20px #ff0000;
+  transition: width 0.6s ease-in-out;
 }
 
-.flash {
-  animation: bloodflash 0.42s;
-}
-@keyframes bloodflash {
-  0% { background: #f00; color: #111; }
-  50% { background: #200; color: #fefefe;}
-  100% { background: inherit; color: #ffd9d9;}
+#vote-info {
+  font-size: 1.2em;
+  color: #ff8888;
+  text-shadow: 0 0 8px #ff0000;
 }
 
-.info, .last-voters, .actions {
-  margin-top: 9px;
-  font-size: 1em;
-  font-family: 'Creepster', Arial, sans-serif;
+/* --- panneau test --- */
+#test-panel {
+  margin-top: 15px;
 }
 
-#votants {
-  padding-left: 13px;
-  margin: 2px 0;
-  color: #e26d8d;
-  font-size: 1.17em;
-}
-#votants li {
-  margin-bottom: 0;
-  filter: blur(0.10px) brightness(0.8);
-  text-shadow: 0 0 4px #d23939, 1px 2px 2px #210009;
-}
-
-.actions button {
-  margin-right: 8px;
-  background: #440009;
-  color: #ffc6cc;
-  border: 2px solid #c1101a;
-  padding: 3px 11px;
-  border-radius: 7px;
+#test-panel button {
+  background: #330000;
+  color: #ff4444;
+  border: 2px solid #ff0000;
+  border-radius: 10px;
+  font-family: 'Creepster', cursive;
+  font-size: 1.1em;
+  padding: 5px 10px;
+  margin: 0 5px;
   cursor: pointer;
-  font-family: 'Creepster', Arial, sans-serif;
-  font-size: 1.09em;
-  letter-spacing: .11em;
-  box-shadow: 0 0 10px #430014;
-  transition: background .19s;
+  transition: all 0.3s;
 }
-.actions button:hover {
-  background: #900025;
-  color: #fff;
+
+#test-panel button:hover {
+  background: #ff0000;
+  color: #000;
+}
+
+#mode-indicateur {
+  margin-top: 8px;
+  font-size: 1.2em;
+  color: #ff5555;
+  text-shadow: 0 0 8px #ff0000;
 }

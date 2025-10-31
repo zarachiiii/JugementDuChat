@@ -1,45 +1,30 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Widget Notes Twitch - Style Horreur</title>
-  <!-- Police horreur Creepster -->
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-  <!-- Ton CSS personnalisé style horreur -->
-  <link rel="stylesheet" href="styles.css">
-  <!-- Anime.js pour les animations -->
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>Jugement du Chat 🔪</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="widget-note">
-    <div class="header">
-      <span id="mode-indicateur">Mode : TEST</span>
-      <button onclick="toggleMode()" class="toggle-btn">Bascule mode</button>
-      <button onclick="resetNotes()" class="reset-btn">Reset</button>
+  <div id="jugement">
+    <h2>🔪 Le Jugement du Chat 🔪</h2>
+    <div id="note-moyenne">Note moyenne : 0 / 20</div>
+    <div id="barre">
+      <div id="remplissage"></div>
+    </div>
+    <div id="vote-info">0 votants</div>
+
+    <div id="test-panel">
+      <button onclick="ajouterNoteAleatoire()">🩸 Note aléatoire</button>
+      <button onclick="ajouterNote(1)">+1</button>
+      <button onclick="resetNotes()">🔄 Reset</button>
+      <button onclick="toggleMode()">⚙️ Basculer Mode</button>
     </div>
 
-    <div class="progress-bar-bg">
-      <div class="progress-bar-fg" id="remplissage"></div>
-      <div class="progress-label" id="note-moyenne">Note moyenne : 0 / 20</div>
-    </div>
-
-    <div class="info">
-      <span id="vote-info">0 votants</span>
-    </div>
-
-    <div class="last-voters">
-      <strong>Derniers votants :</strong>
-      <ul id="votants"></ul>
-    </div>
-
-    <div class="actions" id="test-actions">
-      <button onclick="ajouterNoteAleatoire()">+ Note aléatoire</button>
-      <button onclick="ajouterNote(20)">Simuler 20/20</button>
-      <button onclick="ajouterNote(0)">Simuler 0/20</button>
-    </div>
+    <div id="mode-indicateur">Mode : TEST</div>
   </div>
-  
-  <!-- Ton script JS principal -->
-  <script src="widget-note.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tmi.js/1.8.5/tmi.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
