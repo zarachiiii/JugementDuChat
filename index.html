@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Widget Notes Twitch</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Anime.js pour les animations de jauge -->
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+</head>
+<body>
+  <div class="widget-note">
+    <div class="header">
+      <span id="mode-indicateur">Mode : TEST</span>
+      <button onclick="toggleMode()" class="toggle-btn">Bascule mode</button>
+      <button onclick="resetNotes()" class="reset-btn">Reset</button>
+    </div>
+
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fg" id="remplissage"></div>
+      <div class="progress-label" id="note-moyenne">Note moyenne : 0 / 20</div>
+    </div>
+
+    <div class="info">
+      <span id="vote-info">0 votants</span>
+    </div>
+
+    <div class="last-voters">
+      <strong>Derniers votants :</strong>
+      <ul id="votants"></ul>
+    </div>
+
+    <div class="actions" id="test-actions">
+      <button onclick="ajouterNoteAleatoire()">+ Note aléatoire</button>
+      <button onclick="ajouterNote(20)">Simuler 20/20</button>
+      <button onclick="ajouterNote(0)">Simuler 0/20</button>
+    </div>
+  </div>
+  
+  <script src="widget-note.js"></script>
+</body>
+</html>
