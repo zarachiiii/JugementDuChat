@@ -5,105 +5,213 @@
   <title>Widget Note Twitch</title>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
   <style>
-    body { background: transparent; font-family: 'Creepster', Arial, sans-serif; }
-    .widget-note { width: 420px; padding: 22px; background: linear-gradient(135deg, #160D13 75%, #460006 100%);
-      border: 3px solid #911C1D; border-radius: 20px; color: #fbe8ea; box-shadow: 0 0 50px #21021D;
-      filter: drop-shadow(0 1px 11px #440007a0);}
-    .header { display: flex; justify-content: space-between; align-items: center; font-size: 1.06em; margin-bottom: 8px; }
-    .toggle-btn,.reset-btn { background: #184; color: #fff; border: none; padding: 4px 14px; border-radius: 7px;
-      font-size: 1em; cursor: pointer; transition: background .2s;}
-    .reset-btn { background: #922; }
-    .toggle-btn:hover,.reset-btn:hover { background: #357; }
-    .progress-bar-bg { position: relative; width: 100%; height: 36px; background: #202445; border-radius: 12px;
-      margin-bottom: 10px; overflow: hidden;}
-    .progress-bar-fg { position: absolute; left: 0; height: 100%; width: 0; background: linear-gradient(90deg,#06f 0%,#7fe 90%);
-      border-radius: 12px 0 0 12px; transition: width 0.5s cubic-bezier(.68,-0.55,.27,1.55);}
-    .progress-label { position: absolute; width: 100%; text-align: center; line-height: 36px; font-size: 1.36em;
-      z-index: 2; color: #fff; text-shadow: 2px 2px 8px #000c;}
-    .info, .last-voters, .actions { margin-top: 8px; font-size: 1em;}
-    #votants { padding-left: 12px; margin:2px 0; list-style: disc; color: #bedfff; font-size: .96em;}
-    #votants li { margin-bottom: 0;}
-    .actions button{ margin-right: 8px; display: inline-block; margin-top: 6px; background: #259df7;
-      color: #fff; border: none; padding: 3px 10px; border-radius: 5px; cursor: pointer; font-size: .95em;
-      transition: background .16s;}
-    .actions button:hover { background: #194a78;}
+    body {
+      background: transparent;
+      font-family: 'Creepster', Arial, sans-serif;
+    }
+
+    .widget-note {
+      width: 420px;
+      padding: 22px;
+      background: linear-gradient(135deg, #160D13 75%, #460006 100%);
+      border: 3px solid #911C1D;
+      border-radius: 20px;
+      color: #fbe8ea;
+      box-shadow: 0 0 50px #21021D;
+      filter: drop-shadow(0 1px 11px #440007a0);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.06em;
+      margin-bottom: 8px;
+    }
+
+    .reset-btn {
+      background: #922;
+      color: #fff;
+      border: none;
+      padding: 4px 14px;
+      border-radius: 7px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .reset-btn:hover {
+      background: #b44;
+    }
+
+    .progress-bar-bg {
+      position: relative;
+      width: 100%;
+      height: 36px;
+      background: #202445;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fg {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #06f 0%, #7fe 90%);
+      border-radius: 12px 0 0 12px;
+      transition: width 0.8s ease-out, background 0.5s;
+    }
+
+    .progress-label {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      line-height: 36px;
+      font-size: 1.36em;
+      z-index: 2;
+      color: #fff;
+      text-shadow: 2px 2px 8px #000c;
+    }
+
+    .info, .last-voters {
+      margin-top: 8px;
+      font-size: 1em;
+    }
+
+    #votants {
+      padding-left: 12px;
+      margin: 2px 0;
+      list-style: disc;
+      color: #bedfff;
+      font-size: .96em;
+    }
+
+    #votants li {
+      margin-bottom: 0;
+    }
   </style>
+
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="https://unpkg.com/tmi.js@1.8.5"></script>
+  <script src="https://unpkg.com/tmi.js@1.8.5/dist/tmi.min.js"></script>
 </head>
 <body>
   <div class="widget-note">
     <div class="header">
-      <span id="mode-indicateur">Connexion au chat Twitch</span>
+      <span id="mode-indicateur">Connexion au chat Twitch...</span>
       <button onclick="resetNotes()" class="reset-btn">Reset</button>
     </div>
+
     <div class="progress-bar-bg">
       <div class="progress-bar-fg" id="remplissage"></div>
       <div class="progress-label" id="note-moyenne">Note moyenne : 0 / 20</div>
     </div>
+
     <div class="info">
       <span id="vote-info">0 votants</span>
     </div>
+
     <div class="last-voters">
       <strong>Derniers votants :</strong>
       <ul id="votants"></ul>
     </div>
   </div>
+
   <script>
-    let votes = {}, total = 0, moyenne = 0;
+    let votes = {};
+    let total = 0;
+    let moyenne = 0;
+
+    // === Sauvegarde locale ===
+    function sauvegarderVotes() {
+      localStorage.setItem('votesTwitch', JSON.stringify(votes));
+    }
+
+    function chargerVotes() {
+      const data = localStorage.getItem('votesTwitch');
+      if (data) votes = JSON.parse(data);
+    }
+
+    // === Calcul de la moyenne ===
     function recalculerMoyenne() {
       const nbVotants = Object.keys(votes).length;
       if (nbVotants === 0) {
         document.getElementById('note-moyenne').textContent = 'Note moyenne : 0 / 20';
-        document.getElementById('vote-info').textContent = '0 votants';
+        document.getElementById('vote-info').textContent = '0 votant';
         document.getElementById('remplissage').style.width = '0%';
         document.getElementById('votants').innerHTML = '';
+        sauvegarderVotes();
         return;
       }
+
       total = Object.values(votes).reduce((a, b) => a + b, 0);
       moyenne = total / nbVotants;
+
       document.getElementById('note-moyenne').textContent = `Note moyenne : ${moyenne.toFixed(1)} / 20`;
       document.getElementById('vote-info').textContent = `${nbVotants} votant${nbVotants > 1 ? 's' : ''}`;
+
       const pourcentage = (moyenne / 20) * 100;
+      const color = moyenne < 10 ? '#f44' : moyenne < 15 ? '#fc3' : '#4f4';
+
       anime({
         targets: '#remplissage',
         width: `${pourcentage}%`,
-        duration: 700,
-        easing: 'easeOutElastic(1, .8)'
+        background: `linear-gradient(90deg, ${color} 0%, #7fe 100%)`,
+        duration: 800,
+        easing: 'easeOutQuad'
       });
+
       const votantsElem = document.getElementById('votants');
       const votantsRecents = Object.keys(votes).slice(-5).reverse();
       votantsElem.innerHTML = votantsRecents.map(v => `<li>${v} : ${votes[v]}</li>`).join('');
-    }
-    function resetNotes() {
-      votes = {}; total = 0; moyenne = 0; recalculerMoyenne();
-    }
-    document.addEventListener('DOMContentLoaded', recalculerMoyenne);
 
-    // Connexion Twitch Chat via tmi.js (modifie bien le pseudo ci-dessous)
-    let client;
-    try {
-      client = new tmi.Client({ channels: ['zarachiiii'] }); // remplace 'zarachiiii' par ton pseudo Twitch
-      client.connect();
-      document.getElementById('mode-indicateur').textContent = "Connexion réussie – !note [nombre]";
-    } catch(e){
-      document.getElementById('mode-indicateur').textContent = "Erreur connexion tmi.js";
+      sauvegarderVotes();
     }
-    if(typeof tmi !== "undefined") {
-      client.on('message', (channel, tags, message, self) => {
-        if(self) return;
-        const pseudo = tags['display-name'] || tags.username;
-        const regex = /!note\s*(\d{1,2})/i;
-        const match = message.match(regex);
-        if(match){
-          let note = parseInt(match[1]);
-          if(isNaN(note) || note < 0 || note > 20) return;
-          if(votes[pseudo] !== undefined) total -= votes[pseudo];
-          votes[pseudo] = note;
-          recalculerMoyenne();
-        }
-      });
+
+    function resetNotes() {
+      votes = {};
+      total = 0;
+      moyenne = 0;
+      localStorage.removeItem('votesTwitch');
+      recalculerMoyenne();
     }
-  </script>
-</body>
-</html>
+
+    // === Chargement initial ===
+    document.addEventListener('DOMContentLoaded', () => {
+      chargerVotes();
+      recalculerMoyenne();
+    });
+
+// === Connexion Twitch ===
+const twitchChannel = 'zarachiiii'; // 🔧 Ton pseudo Twitch
+
+// Évite les doubles connexions si le widget se recharge
+if (typeof window.twitchClient === "undefined") {
+  window.twitchClient = new tmi.Client({ channels: [twitchChannel] });
+
+  window.twitchClient.connect()
+    .then(() => {
+      document.getElementById('mode-indicateur').textContent = `✅ Connecté à ${twitchChannel} – tapez !note [0-20]`;
+    })
+    .catch(() => {
+      document.getElementById('mode-indicateur').textContent = "❌ Erreur : impossible de se connecter à Twitch";
+    });
+
+  window.twitchClient.on('message', (channel, tags, message, self) => {
+    if (self) return;
+    const pseudo = tags['display-name'] || tags.username;
+    const regex = /!note\s*(\d{1,2})/i;
+    const match = message.match(regex);
+    if (match) {
+      let note = parseInt(match[1]);
+      if (isNaN(note) || note < 0 || note > 20) {
+        window.twitchClient.say(channel, `@${pseudo} ➜ La note doit être entre 0 et 20 !`);
+        return;
+      }
+      votes[pseudo] = note;
+      recalculerMoyenne();
+    }
+  });
+}
+
